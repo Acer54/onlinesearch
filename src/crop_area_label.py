@@ -2,14 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import tempfile
-#import face_detection_image as detector
 import random
-import numpy
-import itertools
 from wand.image import Image
 from wand import color
-import numbers
-
 
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
@@ -74,14 +69,7 @@ class crop_area_label(QLabel):
 
     def zoom_image(self, factor=100):
 
-        #print("Changing Zoomfactor to", factor)
-        #detect position of current selection
-        #self.rect() # complete picture, ignoring position of sliders
-        #self.clip_rect # selection rect
         ratio = float(float(self.picture_original.height()) / float(self.picture_original.width()))
-        #print("Original height is:",self.rect().x())     #  .height = 430
-        #print(self.clip_rect.width())
-        #print(self.rect().width())
         xBreite_markiert = float(self.clip_rect.width()) / float(self.rect().width())
         #print(xBreite_markiert)  # 0.456102783726 der gesamten Breite ist markiert (45%)
 
@@ -96,15 +84,10 @@ class crop_area_label(QLabel):
 
         yEndPunkt_markiert = float(self.clip_rect.bottom()) / float(self.rect().height())
         #print(yEndPunkt_markiert) #die markierung endet bei 0.65....(65%, von oben)
-
-
         #height = round(self.picture_original.height() * factor / 100)
         width = round(self.picture_original.width() * factor / 100)
         height = round(width * ratio)
-
-
         self.connect_loadNewPicture(self.picturepath, height, width)
-
         #restore selection rect
 
         self.clip_rect.setTopLeft(QPoint((round(self.rect().width() * xStartPunkt_markiert)),
@@ -332,75 +315,9 @@ class crop_area_label(QLabel):
 
         return self.currentFile
 
-    def detectFace(self, pic):
-        print("Searching for Face")
-        #convert pic to numpy.narray
-        incomingImage = pic.convertToFormat(4)
-
-        width = incomingImage.width()
-        height = incomingImage.height()
-
-        ptr = incomingImage.constBits()
-        ptr.setsize(incomingImage.byteCount())
-        arr = numpy.array(ptr).reshape(height, width, 4)  #  Copies the data
-
-        rects = detector.detect_faces(arr, self.height(), self.width())
-
-        if len(rects) == 0:
-            print("Sorry, found no faces in picture")
-            return
-
-        left = self.largest_rect.left()
-        right = self.largest_rect.right()
-        top = self.largest_rect.top()
-        bottom = self.largest_rect.bottom()
-
-        coordinaten = rects[0]
-        x1 = coordinaten[0]
-        y1 = coordinaten[1]
-        x2 = coordinaten[2]-x1
-        y2 = coordinaten[3]-y1
-
-        X1 = x1-(x2*0.5)
-        Y1 = y1-(y2*0.5)
-        X2 = x2+(x2*0.8)
-        Y2 = y2+(y2*0.8)
-
-
-        #point.setX(max(left, min(point.x(), right)))
-        #point.setY(max(top, min(point.y(), bottom)))
-        #print(left)
-        #print(right)
-        #print(top)
-        #print(bottom)
-
-        point1 = QPoint()
-        point1.setX(max(left, min(X1, right)))
-        point1.setY(max(top, min(Y1, bottom)))
-
-        point2 = QPoint()
-        point2.setX(max(left, min((X1+X2), right)))
-        point2.setY(max(top, min((Y1+Y2), bottom)))
-
-
-        face_clip_rect = QRect()
-        face_clip_rect.setTopLeft(point1)
-        face_clip_rect.setBottomRight(point2)
-
-        self.clip_rect = face_clip_rect
-        print("Face detected with", self.clip_rect)
-
 
     def paintEvent(self, event):
-        #print("painting")
-        #print(event.rect().height())  #visible area
-        #print(self.rect())   #complete area
-        #print("my clipRect is:", self.clip_rect)
         self.largest_rect = event.rect()
-        #print(self.clip_rect.topLeft().x())
-        #print(self.clip_rect.topLeft().y())
-        #print(self.largest_rect.topLeft().x())
-        #print(self.largest_rect.topLeft().y())
 
         # Keep the selected Area inside the visible Area and a minimum Size while scrolling
 
@@ -632,12 +549,7 @@ class crop_area_label(QLabel):
             self.moving = None
 
         self.dragging = None
-
-
         self.repaint()
-
-
-
 
     def zoomlevel(self):
 
