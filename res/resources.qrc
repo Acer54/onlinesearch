@@ -1,0 +1,24 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+<file alias="kombo-search-icon.png">Images/kombo-search-icon.png</file>
+<file alias="amazon.png">Images/amazon.png</file>
+<file alias="chefkoch.png">Images/chefkoch.png</file>
+<file alias="settings.png">Images/settings.png</file>
+<file alias="default.png">Images/default.png</file>
+<file alias="google.png">Images/google.png</file>
+<file alias="google-maps.png">Images/google-maps.png</file>
+<file alias="ubuntuusers.png">Images/ubuntuusers.png</file>
+<file alias="wikipedia.png">Images/wikipedia.png</file>
+<file alias="xhamster.png">Images/xhamster.png</file>
+<file alias="xxx.png">Images/xxx.png</file>
+<file alias="youtube.png">Images/youtube.png</file>
+<file alias="plus.png">Images/plus.png</file>
+<file alias="minus.png">Images/minus.png</file>
+<file alias="mic_on.png">Images/mic_on.png</file>
+<file alias="mic_off.png">Images/mic_off.png</file>
+<file alias="beep.wav">Images/beep.wav</file>
+<file alias="fromFile.png">Images/fromFile.png</file>
+<file alias="fromScreen.png">Images/fromScreen.png</file>
+<file alias="reset.png">Images/reset.png</file>
+</qresource>
+</RCC>
