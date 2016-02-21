@@ -431,7 +431,11 @@ class LM_EDITORModel_Tree(QAbstractItemModel):
 
         :return: True or False
         """
+
         self.database = {} # clean database
+        self.categories = []
+        self.descriptions = {}
+        self.engines = []
 
         if not isinstance(filepath, str): # if filepath is not a string:
             try:
@@ -809,8 +813,9 @@ class LM_EDITORDelegate_Tree(QItemDelegate):
         if event.type() == QEvent.KeyPress:
             if event.key() in (Qt.Key_Enter, Qt.Key_Return):
                 pass
-        elif event.type() == QEvent.FocusOut:
-            pass
+        #elif event.type() == QEvent.FocusOut:
+        #    print("Ignore Focus out-Event...")
+        #    pass
         #Call Base Class Method to Continue Normal Event Processing
         return QItemDelegate.eventFilter(self, receiver, event)
 
@@ -871,7 +876,7 @@ class LM_TreeView(QTreeView):
         self.verticalScrollBar().setSliderPosition(self.currentSrollbarPosition)
 
     def expandCategory(self, category):
-        print("Expand Cat:", unicode(category))
+        #print("Expand Cat:", unicode(category))
         for index in range(self.model().rowCount()):
             #proxy_index = self.model().index(index,0)
             #mapped_index = self.model().mapToSource(proxy_index)

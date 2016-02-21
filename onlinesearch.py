@@ -307,7 +307,7 @@ class SearchPromt(QWidget):
         searchquerys-list, and a corresponding self.SEARCHENGINES(dict) where all links are stored.
         """
         #print("SettingsDLG will be created")
-        self.settingsPromt.show()
+        self.settingsPromt.model.loadDatabase(os.path.join(cwd,"engines.csv"))
         self.connect(self.settingsPromt, SIGNAL("database_changed()"), self.on_Settings_accepted)
         self.settingsPromt.show()
         #print("SettingsDLG was left.")

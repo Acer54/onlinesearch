@@ -544,7 +544,11 @@ class settings_dlg(QMainWindow, Ui_MainWindow):    # , settings.UiForm
                 self.treeView.setDisabled(False)
                 new_name = unicode(self.lE_Anzeigename.text()).lstrip().rstrip()
                 changedEngineData, category = self.treeView.getCurrentSelectedArticleAndItsParent()
-                if changedEngineData.name != new_name:
+                index = self.treeView.selectionModel().selectedIndexes()[0]
+                if not isinstance(changedEngineData, SearchEngine):  # you edited a category
+                    self.model.setData(index, QVariant(new_name))
+
+                elif changedEngineData.name != new_name:        # you edited a searchengine
                     changedEngineData.name = new_name
                     needViewUpdate = True
                 self.lE_Anzeigename_diry = False
@@ -571,8 +575,10 @@ class settings_dlg(QMainWindow, Ui_MainWindow):    # , settings.UiForm
 
         if needViewUpdate:
             self.model.reset()
+
             self.treeView.expandCategory(category)
-            self.treeView.selectArticle(category, changedEngineData.name)
+            if changedEngineData != category:
+                self.treeView.selectArticle(category, changedEngineData.name)
             self.OkToContinue = True
 
     def addPosition(self):
@@ -912,6 +918,7 @@ class settings_dlg(QMainWindow, Ui_MainWindow):    # , settings.UiForm
         self.lE_Link_is_dirty = status
 
     def dirty_lE_Anzeigename(self, status):
+        print("dirty Anzeigename...")
         self.lE_Anzeigename_diry = status
 
     def onFinish(self, status):
