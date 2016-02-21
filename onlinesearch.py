@@ -196,7 +196,7 @@ class SearchPromt(QWidget):
                 self.SEARCHENGINES[key].update({"INDEX": i})
                 #print("Fill Label with: ",key ,self.SEARCHENGINES[key]["INDEX"])
             elif len(self.SEARCHENGINES[key]["LINK"]) > 1:
-                print("populating Label with CategoryImage", key[1:])
+                #print("populating Label with CategoryImage", key[1:])
                 pixmap = self.settingsPromt.categoryImage_per_category_name(key[1:],280,200)
                 if not pixmap.isNull():
                     i = self.labelIcon.addPicture(pixmap, 280, 200,True)
@@ -306,14 +306,15 @@ class SearchPromt(QWidget):
         If the "OK" Button of Settings-Dialog is pressed, the new searchengines(dict) will be transfered in a new
         searchquerys-list, and a corresponding self.SEARCHENGINES(dict) where all links are stored.
         """
-        print("SettingsDLG will be created")
+        #print("SettingsDLG will be created")
         self.settingsPromt.show()
         self.connect(self.settingsPromt, SIGNAL("database_changed()"), self.on_Settings_accepted)
         self.settingsPromt.show()
         #print("SettingsDLG was left.")
 
     def on_Settings_accepted(self):
-        print("Settings was accepted")
+        #print("Settings was accepted")
+        self.settingsPromt.model.loadDatabase(os.path.join(cwd,"engines.csv"))
         self.loadEngines()
         self.__fillLabel()
 
