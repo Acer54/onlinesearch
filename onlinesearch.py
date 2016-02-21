@@ -195,7 +195,7 @@ class SearchPromt(QWidget):
                 #self.labelIcon.addPicture(path, 640, 480)
                 self.SEARCHENGINES[key].update({"INDEX": i})
                 #print("Fill Label with: ",key ,self.SEARCHENGINES[key]["INDEX"])
-            elif len(self.SEARCHENGINES[key]["LINK"]) > 1:
+            elif len(self.SEARCHENGINES[key]["LINK"]) >= 1:
                 #print("populating Label with CategoryImage", key[1:])
                 pixmap = self.settingsPromt.categoryImage_per_category_name(key[1:],280,200)
                 if not pixmap.isNull():
@@ -373,8 +373,6 @@ class SearchPromt(QWidget):
                 self.labelIcon.showPicture(self.SEARCHENGINES[self.query]["INDEX"])
             else:
                 self.labelIcon.showPicture(0)
-                pass
-
         else:
             if self.labelIcon.currentIndex() is not 0:
                 self.labelIcon.showPicture(0)    # will be used, for querys which are not defined yet
