@@ -593,7 +593,7 @@ class settings_dlg(QMainWindow, Ui_MainWindow):    # , settings.UiForm
         newArticle = model.insertNewArticle(parentCategory)       # insert a new Article on self.articles of model
         pseudoItem =TreeItem(newArticle, newArticle.category, None) # create a pseudo Item for searching
         index = self.on_set_current_row(pseudoItem)          # search and select the new item which was created
-        View.edit(index.sibling(index.row(),1), QAbstractItemView.DoubleClicked, QEvent(QEvent.MouseButtonDblClick))
+        #View.edit(index.sibling(index.row(),1), QAbstractItemView.DoubleClicked, QEvent(QEvent.MouseButtonDblClick))
         # set the selected row in edit mode (use the column 1 (description)
         return True
 
