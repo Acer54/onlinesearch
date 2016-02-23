@@ -455,8 +455,11 @@ class LM_EDITORModel_Tree(QAbstractItemModel):
                 name = item.get("name").decode("utf-8")
                 link = item.get("link").decode("utf-8")
                 imagepath = item.get("imagepath").decode("utf-8")
+
                 if imagepath.startswith("Logos"):
-                    imagepath = os.path.join(cwd.split("/src")[0],imagepath)
+                    #imagepath = os.path.join(cwd.split("/src")[0],imagepath)
+                    imagepath = os.path.join(os.path.abspath(os.path.join(os.path.dirname( __file__ ), os.pardir)),
+                                             imagepath)
 
                 searchengine_new = SearchEngine(name, link, imagepath, category)
                 atName = searchengine_new.get_atName()
@@ -1053,3 +1056,7 @@ class LM_TreeView(QTreeView):
         else:
             return True
 
+if __name__ == "__main__":
+    print(os.getcwd())
+    print(os.path.dirname(os.path.realpath(__file__)) )
+    print(os.path.abspath(os.path.join(os.path.dirname( __file__ ), os.pardir)))
