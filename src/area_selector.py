@@ -213,9 +213,12 @@ class AreaSelector(QWidget):
         #                                              geo.left(), geo.top(),
         #                                               geo.width(), geo.height())  # the whole screen as Pixmap
         self.completeScreenPixmap = QPixmap.grabWindow(QApplication.desktop().winId())
-        mapped_clip_rect=QRect(self.mapToGlobal(self.clip_rect.topLeft()),
-                               self.mapToGlobal(self.clip_rect.bottomRight()))
-        self.selectedAreaPixmap = self.completeScreenPixmap.copy(mapped_clip_rect)        # the selection as Pixmap
+        try:  # Ducktyping, if clip_rect is existing id not.
+            mapped_clip_rect=QRect(self.mapToGlobal(self.clip_rect.topLeft()),
+                                   self.mapToGlobal(self.clip_rect.bottomRight()))
+            self.selectedAreaPixmap = self.completeScreenPixmap.copy(mapped_clip_rect)        # the selection as Pixmap
+        except:
+            pass
         # create the path and a random filename for the Image
         dir = tempfile.gettempdir()
         filename = random.randint(1,900)
@@ -223,7 +226,11 @@ class AreaSelector(QWidget):
 
         filename = os.path.join(dir, "{0}.{1}".format(filename, extension))
         # Store Pixmap to file
-        self.selectedAreaPixmap.save(filename)
+        try:
+            self.selectedAreaPixmap.save(filename)
+        except:
+            self.completeScreenPixmap.save(filename)
+
         self.emit(SIGNAL("screenshot_ready(QString)"), filename)
         print("Screenshot was successfully saved:", filename)
         self.screenshotTaken = True     # this flag is only evaluated during "closeEvent"

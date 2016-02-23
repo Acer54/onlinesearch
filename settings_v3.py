@@ -247,7 +247,10 @@ class settings_dlg(QMainWindow, Ui_MainWindow):    # , settings.UiForm
         self.setWindowOpacity(0.00)
         time.sleep(0.5) # wait until the window is REALY hidden...
 
-        self.areaSelector.show_selection_area()
+        if sys.platform.startswith("win"):
+            self.areaSelector.onScreenshot()
+        else:
+            self.areaSelector.show_selection_area()
 
     def ensureVisible(self):
         print("Ensure Visible")
