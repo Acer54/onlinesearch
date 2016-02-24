@@ -55,7 +55,6 @@ class settings_dlg(QMainWindow, Ui_MainWindow):    # , settings.UiForm
         self.__createMenus()
         self.__createToolBars()
         self.__setupItems()
-        self.__setupLineEdits()
         self.__setupConnections()
 
         status = self.model.loadDatabase(self.filepath)
@@ -189,24 +188,10 @@ class settings_dlg(QMainWindow, Ui_MainWindow):    # , settings.UiForm
         self.lE_Link_is_dirty = False
         self.lE_Anzeigename_diry = False
 
-    def __setupLineEdits(self):
-
-        #create Validator for "Anzeigename" : starts with "@", at minimum 2 letters or digits following...
-
-        #rx = QRegExp('@([A-Za-z0-9-_]{2,})[\S]*') #@[A-Za-z0-9-_]{2,}
-        rx = QRegExp('@([\S]{2,})[\S]*')
-        self.validation_Anzeigename = QRegExpValidator(rx)
-
-        #rx2 = QRegExp('http://www.{1,1}(.+)%s{1,1}(.*)[\S]*')
-        #rx2 = QRegExp('(^(https?|ftp|file)://)?(www.)?[-A-Za-z0-9+&@#/%?=~_|!:,.;]+(%s)+.*')
-        rx2 = QRegExp('^(((https?)://www\.)|(www\.))?'          # es muss entweder http://www. oder www. vorkommen
+        self.validation_Link = QRegExpValidator(QRegExp('^(((https?)://www\.)|(www\.))?'   # es muss entweder http://www. oder www. vorkommen
                       '[-A-Za-z0-9+&@#/%?=~_|!:,.;]+'           # dann kommt alles mögliche
                       '(%s)'                                    # dann ein %s
-                      '.*')                                     # und dann wieder alles...
-        #rx2.setMinimal(True)
-
-        #rx2 = QRegExp('.*')
-        self.validation_Link = QRegExpValidator(rx2)
+                      '.*'))
 
     def __setupConnections(self):
 

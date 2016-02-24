@@ -92,7 +92,6 @@ class AreaSelector(QWidget):
         self.screenshotTaken = True     # this flag is only evaluated during "closeEvent"
         self.close()
 
-
     def paintEvent(self, event):
         #print("Painting 1")
         painter = QPainter()
@@ -218,7 +217,7 @@ class AreaSelector(QWidget):
                                    self.mapToGlobal(self.clip_rect.bottomRight()))
             self.selectedAreaPixmap = self.completeScreenPixmap.copy(mapped_clip_rect)        # the selection as Pixmap
         except:
-            pass
+            self.selectedAreaPixmap = self.completeScreenPixmap
         # create the path and a random filename for the Image
         dir = tempfile.gettempdir()
         filename = random.randint(1,900)
@@ -226,10 +225,7 @@ class AreaSelector(QWidget):
 
         filename = os.path.join(dir, "{0}.{1}".format(filename, extension))
         # Store Pixmap to file
-        try:
-            self.selectedAreaPixmap.save(filename)
-        except:
-            self.completeScreenPixmap.save(filename)
+        self.selectedAreaPixmap.save(filename)
 
         self.emit(SIGNAL("screenshot_ready(QString)"), filename)
         print("Screenshot was successfully saved:", filename)
