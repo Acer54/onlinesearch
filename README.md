@@ -27,4 +27,4 @@ amazon, ebay, billiger.de und und und durchsuchen.
 Ausserdem habe ich das Script mittel "xbindkeys" auf einen Shortcut gelegt, was mir erlaubt dieses Fenster jederzeit
 in kürzester Zeit zu öffnen und komplett ohne Maus zu bedienen.
 
-### Getestet unter Ubuntu 14.04
+### Getestet unter Ubuntu 14.04, Windows7
